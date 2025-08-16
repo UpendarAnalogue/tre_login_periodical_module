@@ -16,8 +16,37 @@ class _PInspectionState extends State<PInspection> {
   String? selectedSection;
   DateTime? selectedDate;
   String? selectedSS;
+  String? selectedSapEquipCode;
 
-  List<String> allData = ["0004-33KV SS-REC"];
+  String? selectedOti;
+  String? selectedWti;
+  String? selectedMog;
+  String? selectedBuchholz;
+  String? selectedVent;
+  String? selectedPressure;
+  String? selectedBimetalic;
+  String? selectedBush;
+  String? selectedOltc;
+  String? selectedFlexible;
+  String? selectedEarthing;
+  String? selectedEarthMatStatus;
+  String? selectedHorngap;
+  String? selectedOilLeakage;
+  String? selectedCleaning;
+  //String?  ;
+
+  final TextEditingController _nooftaps = TextEditingController();
+  final TextEditingController _irhvbody = TextEditingController();
+  final TextEditingController _irlvbody = TextEditingController();
+  final TextEditingController _irhvlv = TextEditingController();
+  final TextEditingController _earthresistance = TextEditingController();
+  final TextEditingController _ptrbody = TextEditingController();
+  final TextEditingController _oilbdvvaluebottom = TextEditingController();
+  final TextEditingController _oilbdvvaluetop = TextEditingController();
+  final TextEditingController _oilbdvvalueloltc = TextEditingController();
+  // final TextEditingController _ = TextEditingController();
+
+  List<String> selectSS = ["0004-33KV SS-REC"];
 
   List<String> selectDivision = [
     "SELECT",
@@ -38,6 +67,112 @@ class _PInspectionState extends State<PInspection> {
     "KADIPIKONDA",
     "WADDEPALLY",
   ];
+
+  List<String> selectOtiStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectWtiStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectMogStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectBuchholzStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectVentStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectPressureStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectBimetallicStatus = [
+    "SELECT",
+    "AVAILABLE",
+    "NOT AVAILABLE",
+  ];
+  List<String> selectBushStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectOltcStatus = [
+    "SELECT",
+    "TESTED AND OK",
+    "NOT TESTED",
+    "REPAIRED",
+    "REPLACED",
+    "TOBE ATTENDED",
+    "UN SERVICEABLE",
+  ];
+
+  List<String> selectFlexible = ["SELECT", "AVAILABLE", "NOT AVAILABLE"];
+
+  List<String> selectEarthing = [
+    "SELECT",
+    "DOUBLE FLAT EARTHING",
+    "SINGLE FLAT EARTHING",
+  ];
+
+  List<String> selectEarthMatStatus = [
+    "SELECT",
+    "RENOVATION REQUIRED",
+    "RENOVATION NOT REQUIRED",
+  ];
+
+  List<String> selectHorngapFuseStatus = ["SELECT", "OK", "NOT OK"];
+
+  List<String> selectOilLeakageStatus = ["SELECT", "YES", "NO"];
+
+  List<String> selectCleaningStatus = ["SELECT", "YES", "NO"];
+
   Future<void> _pickDate() async {
     DateTime? picked = await showDatePicker(
       context: context,
@@ -52,6 +187,115 @@ class _PInspectionState extends State<PInspection> {
       });
     }
   }
+
+
+  bool validateForm(BuildContext context) {
+  // Check Dropdowns
+  if (selectedDivision == null ||
+      selectedSubDivision == null ||
+      selectedSection == null ||
+      selectedDate == null ||
+      selectedSS == null ||
+      selectedSapEquipCode == null ||
+      selectedOti == null ||
+      selectedWti == null ||
+      selectedMog == null ||
+      selectedBuchholz == null ||
+      selectedVent == null ||
+      selectedPressure == null ||
+      selectedBimetalic == null ||
+      selectedBush == null ||
+      selectedOltc == null ||
+      selectedFlexible == null ||
+      selectedEarthing == null ||
+      selectedEarthMatStatus == null ||
+      selectedHorngap == null ||
+      selectedOilLeakage == null ||
+      selectedCleaning == null) {
+    _showCustomDialog(context, "Please fill all dropdown fields", false);
+    return false;
+  }
+
+  // // Check Text Fields
+  // if (_nooftaps.text.isEmpty ||
+  //     _irhvbody.text.isEmpty ||
+  //     _irlvbody.text.isEmpty ||
+  //     _irhvlv.text.isEmpty ||
+  //     _earthresistance.text.isEmpty ||
+  //     _ptrbody.text.isEmpty ||
+  //     _oilbdvvaluebottom.text.isEmpty ||
+  //     _oilbdvvaluetop.text.isEmpty ||
+  //     _oilbdvvalueloltc.text.isEmpty) {
+  //   _showCustomDialog(context, "Please fill all text fields", false);
+  //   return false;
+  // }
+  if (_nooftaps.text.isEmpty || _nooftaps.text.length < 2) {
+  _showCustomDialog(context, "No of Taps must be at least 2 characters", false);
+  return false;
+}
+
+if (_irhvbody.text.isEmpty || _irhvbody.text.length < 8 ||
+    _irlvbody.text.isEmpty || _irlvbody.text.length < 8 ||
+    _irhvlv.text.isEmpty || _irhvlv.text.length < 8 ||
+    _earthresistance.text.isEmpty || _earthresistance.text.length < 8 ||
+    _ptrbody.text.isEmpty || _ptrbody.text.length < 8 ||
+    _oilbdvvaluebottom.text.isEmpty || _oilbdvvaluebottom.text.length < 8 ||
+    _oilbdvvaluetop.text.isEmpty || _oilbdvvaluetop.text.length < 8 ||
+    _oilbdvvalueloltc.text.isEmpty || _oilbdvvalueloltc.text.length < 8) {
+  _showCustomDialog(context, "All other fields must be at least 8 characters", false);
+  return false;
+}
+
+
+  // All fields filled
+  _showCustomDialog(context, "SS MAINTANENCE SAVED SUCCESSFULLY", true);
+  return true;
+}
+
+// Custom Dialog
+void _showCustomDialog(BuildContext context, String msg, bool success) {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0), // rectangle shape
+      ),
+      backgroundColor: Colors.white, // base white background
+      title: Container(
+        padding: const EdgeInsets.all(8),
+        color: success ? Colors.green : Colors.red,
+        child: Text(
+          success ? "Success" : "Error",
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      content: Text(
+        msg,
+        style: TextStyle(
+          color: success ? Colors.green[900] : Colors.red[900],
+          fontSize: 16,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        Center(
+          child: TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: success ? Colors.green : Colors.red,
+            ),
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text("OK"),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +533,7 @@ class _PInspectionState extends State<PInspection> {
                                 labelStyle: TextStyle(color: Colors.red),
                                 border: OutlineInputBorder(),
                               ),
-                              items: allData
+                              items: selectSS
                                   .map(
                                     (status) => DropdownMenuItem(
                                       value: status,
@@ -326,12 +570,12 @@ class _PInspectionState extends State<PInspection> {
                           Expanded(
                             flex: 2,
                             child: DropdownButtonFormField2<String>(
-                              value: selectedSS,
+                              value: selectedSapEquipCode,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 isDense: true, // makes height compact
                               ),
-                              items: ["320000098"]
+                              items: ["320000098","3000000215","310000111"]
                                   .map(
                                     (status) => DropdownMenuItem(
                                       value: status,
@@ -341,7 +585,7 @@ class _PInspectionState extends State<PInspection> {
                                   .toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  selectedSS = value;
+                                  selectedSapEquipCode = value;
                                 });
                               },
                             ),
@@ -458,6 +702,7 @@ class _PInspectionState extends State<PInspection> {
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _nooftaps,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -503,6 +748,7 @@ class _PInspectionState extends State<PInspection> {
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _irhvbody,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -548,6 +794,7 @@ class _PInspectionState extends State<PInspection> {
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _irlvbody,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -593,6 +840,7 @@ class _PInspectionState extends State<PInspection> {
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _irhvlv,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -645,7 +893,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedOti,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -654,7 +902,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectOtiStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -664,9 +912,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedOti = value;
                           });
                         },
                       ),
@@ -698,7 +944,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedWti,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -707,7 +953,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectWtiStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -717,9 +963,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedWti = value;
                           });
                         },
                       ),
@@ -751,7 +995,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedMog,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -760,7 +1004,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectMogStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -770,9 +1014,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedMog = value;
                           });
                         },
                       ),
@@ -804,7 +1046,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedBuchholz,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -813,7 +1055,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectBuchholzStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -823,9 +1065,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedBuchholz = value;
                           });
                         },
                       ),
@@ -857,7 +1097,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedVent,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -866,7 +1106,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectVentStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -876,9 +1116,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedVent = value;
                           });
                         },
                       ),
@@ -910,7 +1148,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedPressure,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -919,7 +1157,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectPressureStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -929,9 +1167,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedPressure = value;
                           });
                         },
                       ),
@@ -960,19 +1196,18 @@ class _PInspectionState extends State<PInspection> {
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedBimetalic,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectBimetallicStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -982,9 +1217,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedBimetalic = value;
                           });
                         },
                       ),
@@ -1013,19 +1246,18 @@ class _PInspectionState extends State<PInspection> {
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedBush,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectBushStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1035,9 +1267,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedBush = value;
                           });
                         },
                       ),
@@ -1066,19 +1296,18 @@ class _PInspectionState extends State<PInspection> {
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedOltc,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectOltcStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1088,9 +1317,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedOltc = value;
                           });
                         },
                       ),
@@ -1098,7 +1325,7 @@ class _PInspectionState extends State<PInspection> {
                   ),
                 ),
               ),
-             Card(
+              Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -1130,6 +1357,7 @@ class _PInspectionState extends State<PInspection> {
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _earthresistance,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -1153,7 +1381,6 @@ class _PInspectionState extends State<PInspection> {
                           ],
                         ),
                       ),
-                      
                     ],
                   ),
                 ),
@@ -1180,19 +1407,18 @@ class _PInspectionState extends State<PInspection> {
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedFlexible,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectFlexible
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1202,9 +1428,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedFlexible = value;
                           });
                         },
                       ),
@@ -1236,7 +1460,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedEarthing,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -1245,7 +1469,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectEarthing
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1255,9 +1479,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedEarthing = value;
                           });
                         },
                       ),
@@ -1289,7 +1511,7 @@ class _PInspectionState extends State<PInspection> {
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedEarthMatStatus,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -1298,7 +1520,7 @@ class _PInspectionState extends State<PInspection> {
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectEarthMatStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1308,9 +1530,7 @@ class _PInspectionState extends State<PInspection> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedEarthMatStatus = value;
                           });
                         },
                       ),
@@ -1319,7 +1539,7 @@ class _PInspectionState extends State<PInspection> {
                 ),
               ),
 
-Card(
+              Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -1351,6 +1571,7 @@ Card(
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _ptrbody,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -1361,9 +1582,7 @@ Card(
                                   isDense: true,
                                   contentPadding: EdgeInsets.only(bottom: 4),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey,
-                                    ), // bottom border
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
@@ -1374,14 +1593,11 @@ Card(
                           ],
                         ),
                       ),
-                  
                     ],
                   ),
                 ),
               ),
 
-
-              
               Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -1403,19 +1619,18 @@ Card(
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedHorngap,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectHorngapFuseStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1425,9 +1640,7 @@ Card(
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedHorngap = value;
                           });
                         },
                       ),
@@ -1459,7 +1672,7 @@ Card(
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedOilLeakage,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -1468,7 +1681,7 @@ Card(
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectOilLeakageStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1478,9 +1691,7 @@ Card(
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedOilLeakage = value;
                           });
                         },
                       ),
@@ -1512,7 +1723,7 @@ Card(
                       // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
-                        value: selectedDivision,
+                        value: selectedCleaning,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -1521,7 +1732,7 @@ Card(
                           border: InputBorder.none, // removes border
                         ),
                         // hint: const Text("SELECT"),
-                        items: selectDivision
+                        items: selectCleaningStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,
@@ -1531,9 +1742,7 @@ Card(
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedDivision = value;
-                            selectedSubDivision = null;
-                            selectedSection = null;
+                            selectedCleaning = value;
                           });
                         },
                       ),
@@ -1574,6 +1783,7 @@ Card(
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _oilbdvvaluebottom,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -1600,7 +1810,7 @@ Card(
                       Divider(color: Colors.grey.shade300, thickness: 1),
 
                       const SizedBox(height: 8),
-                       Padding(
+                      Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
                           children: [
@@ -1621,6 +1831,7 @@ Card(
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _oilbdvvaluetop,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -1645,7 +1856,7 @@ Card(
                         ),
                       ),
                       Divider(color: Colors.grey.shade300, thickness: 1),
-                       Padding(
+                      Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
                           children: [
@@ -1666,6 +1877,7 @@ Card(
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _oilbdvvalueloltc,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -1676,9 +1888,7 @@ Card(
                                   isDense: true,
                                   contentPadding: EdgeInsets.only(bottom: 4),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey,
-                                    ), // bottom border
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
@@ -1690,14 +1900,32 @@ Card(
                         ),
                       ),
                       Divider(color: Colors.grey.shade300, thickness: 1),
-
-                      // Clean Dropdown (No border)
                     ],
                   ),
                 ),
               ),
 
-              //todo todo todo todo
+              const SizedBox(height: 20),
+
+              Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {    validateForm(context);
+},
+                  child: const Text("Submit"),
+                ),
+              ),
             ],
           ),
         ),
