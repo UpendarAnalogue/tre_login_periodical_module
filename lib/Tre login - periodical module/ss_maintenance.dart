@@ -41,11 +41,11 @@ class _SsMaintenanceState extends State<SsMaintenance> {
                 children: const [
                   Icon(Icons.settings, size: 40, color: Colors.blue),
                   SizedBox(height: 8),
-                  Text("INSPECT SS", style: TextStyle(fontSize: 8),),
+                  Text("INSPECT SS", style: TextStyle(fontSize: 8)),
                 ],
               ),
             ),
-        
+
             // PENDING MAINTENANCE
             InkWell(
               onTap: () {
@@ -59,11 +59,11 @@ class _SsMaintenanceState extends State<SsMaintenance> {
                 children: const [
                   Icon(Icons.build, size: 40, color: Colors.green),
                   SizedBox(height: 8),
-                  Text("PENDING MAINTENANCE",style: TextStyle(fontSize: 8),),
+                  Text("PENDING MAINTENANCE", style: TextStyle(fontSize: 8)),
                 ],
               ),
             ),
-        
+
             // MAINTENANCE FINISHED
             InkWell(
               onTap: () {
@@ -79,7 +79,7 @@ class _SsMaintenanceState extends State<SsMaintenance> {
                 children: const [
                   Icon(Icons.report, size: 40, color: Colors.red),
                   SizedBox(height: 8),
-                  Text("MAINTENANCE FINISHED",style: TextStyle(fontSize: 8),),
+                  Text("MAINTENANCE FINISHED", style: TextStyle(fontSize: 8)),
                 ],
               ),
             ),

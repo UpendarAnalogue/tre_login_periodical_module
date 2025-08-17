@@ -577,43 +577,84 @@ class _PInspectionState extends State<PInspection> {
 
                       Divider(color: Colors.grey.shade300, thickness: 1),
 
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       flex: 1,
+                      //       child: const Text(
+                      //         "SAP EQUIPMENT CODE ",
+                      //         style: TextStyle(fontSize: 8),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 8,
+                      //     ), // spacing between text and dropdown
+                      //     Expanded(
+                      //       flex: 2,
+                      //       child: DropdownButtonFormField2<String>(
+                      //         value: selectedSapEquipCode,
+                      //         decoration: const InputDecoration(
+                      //           border: OutlineInputBorder(),
+                      //           isDense: true, // makes height compact
+                      //         ),
+                      //         items: ["320000098", "3000000215", "310000111"]
+                      //             .map(
+                      //               (status) => DropdownMenuItem(
+                      //                 value: status,
+                      //                 child: Text(status),
+                      //               ),
+                      //             )
+                      //             .toList(),
+                      //         onChanged: (value) {
+                      //           setState(() {
+                      //             selectedSapEquipCode = value;
+                      //           });
+                      //         },
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: const Text(
-                              "SAP EQUIPMENT CODE ",
-                              style: TextStyle(fontSize: 8),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ), // spacing between text and dropdown
-                          Expanded(
-                            flex: 2,
-                            child: DropdownButtonFormField2<String>(
-                              value: selectedSapEquipCode,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                isDense: true, // makes height compact
-                              ),
-                              items: ["320000098", "3000000215", "310000111"]
-                                  .map(
-                                    (status) => DropdownMenuItem(
-                                      value: status,
-                                      child: Text(status),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedSapEquipCode = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Expanded(
+      flex: 1,
+      child: const Text(
+        "SAP EQUIPMENT CODE",
+        style: TextStyle(
+          fontSize: 12, // slightly bigger than 8 for readability
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+    const SizedBox(width: 10), // spacing between label and dropdown
+    Expanded(
+      flex: 2,
+      child: DropdownButtonFormField2<String>(
+        value: selectedSapEquipCode,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+        ),
+        items: ["320000098", "3000000215", "310000111"]
+            .map(
+              (code) => DropdownMenuItem(
+                value: code,
+                child: Text(code),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            selectedSapEquipCode = value;
+          });
+        },
+      ),
+    ),
+  ],
+),
+
 
                       Divider(color: Colors.grey.shade300, thickness: 1),
 
