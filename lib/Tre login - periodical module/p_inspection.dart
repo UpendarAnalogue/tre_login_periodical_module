@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/services.dart';
+import 'package:tre_login_periodical_module/Tre%20login%20-%20periodical%20module/ss_maintenance.dart';
 
 class PInspection extends StatefulWidget {
   const PInspection({super.key}); // optional: add const constructor
@@ -188,114 +189,127 @@ class _PInspectionState extends State<PInspection> {
     }
   }
 
-
   bool validateForm(BuildContext context) {
-  // Check Dropdowns
-  if (selectedDivision == null ||
-      selectedSubDivision == null ||
-      selectedSection == null ||
-      selectedDate == null ||
-      selectedSS == null ||
-      selectedSapEquipCode == null ||
-      selectedOti == null ||
-      selectedWti == null ||
-      selectedMog == null ||
-      selectedBuchholz == null ||
-      selectedVent == null ||
-      selectedPressure == null ||
-      selectedBimetalic == null ||
-      selectedBush == null ||
-      selectedOltc == null ||
-      selectedFlexible == null ||
-      selectedEarthing == null ||
-      selectedEarthMatStatus == null ||
-      selectedHorngap == null ||
-      selectedOilLeakage == null ||
-      selectedCleaning == null) {
-    _showCustomDialog(context, "Please fill all dropdown fields", false);
-    return false;
+    // Check Dropdowns
+    if (selectedDivision == null ||
+        selectedSubDivision == null ||
+        selectedSection == null ||
+        selectedDate == null ||
+        selectedSS == null ||
+        selectedSapEquipCode == null ||
+        selectedOti == null ||
+        selectedWti == null ||
+        selectedMog == null ||
+        selectedBuchholz == null ||
+        selectedVent == null ||
+        selectedPressure == null ||
+        selectedBimetalic == null ||
+        selectedBush == null ||
+        selectedOltc == null ||
+        selectedFlexible == null ||
+        selectedEarthing == null ||
+        selectedEarthMatStatus == null ||
+        selectedHorngap == null ||
+        selectedOilLeakage == null ||
+        selectedCleaning == null) {
+      _showCustomDialog(context, "Please fill all dropdown fields", false);
+      return false;
+    }
+
+    // // Check Text Fields
+    // if (_nooftaps.text.isEmpty ||
+    //     _irhvbody.text.isEmpty ||
+    //     _irlvbody.text.isEmpty ||
+    //     _irhvlv.text.isEmpty ||
+    //     _earthresistance.text.isEmpty ||
+    //     _ptrbody.text.isEmpty ||
+    //     _oilbdvvaluebottom.text.isEmpty ||
+    //     _oilbdvvaluetop.text.isEmpty ||
+    //     _oilbdvvalueloltc.text.isEmpty) {
+    //   _showCustomDialog(context, "Please fill all text fields", false);
+    //   return false;
+    // }
+    if (_nooftaps.text.isEmpty || _nooftaps.text.length < 2) {
+      _showCustomDialog(
+        context,
+        "No of Taps must be at least 2 characters",
+        false,
+      );
+      return false;
+    }
+
+    if (_irhvbody.text.isEmpty ||
+        _irhvbody.text.length < 8 ||
+        _irlvbody.text.isEmpty ||
+        _irlvbody.text.length < 8 ||
+        _irhvlv.text.isEmpty ||
+        _irhvlv.text.length < 8 ||
+        _earthresistance.text.isEmpty ||
+        _earthresistance.text.length < 8 ||
+        _ptrbody.text.isEmpty ||
+        _ptrbody.text.length < 8 ||
+        _oilbdvvaluebottom.text.isEmpty ||
+        _oilbdvvaluebottom.text.length < 8 ||
+        _oilbdvvaluetop.text.isEmpty ||
+        _oilbdvvaluetop.text.length < 8 ||
+        _oilbdvvalueloltc.text.isEmpty ||
+        _oilbdvvalueloltc.text.length < 8) {
+      _showCustomDialog(
+        context,
+        "All other fields must be at least 8 characters",
+        false,
+      );
+      return false;
+    }
+
+    // All fields filled
+    _showCustomDialog(context, "SS MAINTANENCE SAVED SUCCESSFULLY", true);
+    return true;
   }
 
-  // // Check Text Fields
-  // if (_nooftaps.text.isEmpty ||
-  //     _irhvbody.text.isEmpty ||
-  //     _irlvbody.text.isEmpty ||
-  //     _irhvlv.text.isEmpty ||
-  //     _earthresistance.text.isEmpty ||
-  //     _ptrbody.text.isEmpty ||
-  //     _oilbdvvaluebottom.text.isEmpty ||
-  //     _oilbdvvaluetop.text.isEmpty ||
-  //     _oilbdvvalueloltc.text.isEmpty) {
-  //   _showCustomDialog(context, "Please fill all text fields", false);
-  //   return false;
-  // }
-  if (_nooftaps.text.isEmpty || _nooftaps.text.length < 2) {
-  _showCustomDialog(context, "No of Taps must be at least 2 characters", false);
-  return false;
-}
-
-if (_irhvbody.text.isEmpty || _irhvbody.text.length < 8 ||
-    _irlvbody.text.isEmpty || _irlvbody.text.length < 8 ||
-    _irhvlv.text.isEmpty || _irhvlv.text.length < 8 ||
-    _earthresistance.text.isEmpty || _earthresistance.text.length < 8 ||
-    _ptrbody.text.isEmpty || _ptrbody.text.length < 8 ||
-    _oilbdvvaluebottom.text.isEmpty || _oilbdvvaluebottom.text.length < 8 ||
-    _oilbdvvaluetop.text.isEmpty || _oilbdvvaluetop.text.length < 8 ||
-    _oilbdvvalueloltc.text.isEmpty || _oilbdvvalueloltc.text.length < 8) {
-  _showCustomDialog(context, "All other fields must be at least 8 characters", false);
-  return false;
-}
-
-
-  // All fields filled
-  _showCustomDialog(context, "SS MAINTANENCE SAVED SUCCESSFULLY", true);
-  return true;
-}
-
-// Custom Dialog
-void _showCustomDialog(BuildContext context, String msg, bool success) {
-  showDialog(
-    context: context,
-    builder: (ctx) => AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0), // rectangle shape
-      ),
-      backgroundColor: Colors.white, // base white background
-      title: Container(
-        padding: const EdgeInsets.all(8),
-        color: success ? Colors.green : Colors.red,
-        child: Text(
-          success ? "Success" : "Error",
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+  // Custom Dialog
+  void _showCustomDialog(BuildContext context, String msg, bool success) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0), // rectangle shape
+        ),
+        backgroundColor: Colors.white, // base white background
+        title: Container(
+          padding: const EdgeInsets.all(8),
+          color: success ? Colors.green : Colors.red,
+          child: Text(
+            success ? "Success" : "Error",
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        content: Text(
+          msg,
+          style: TextStyle(
+            color: success ? Colors.green[900] : Colors.red[900],
+            fontSize: 16,
           ),
           textAlign: TextAlign.center,
         ),
-      ),
-      content: Text(
-        msg,
-        style: TextStyle(
-          color: success ? Colors.green[900] : Colors.red[900],
-          fontSize: 16,
-        ),
-        textAlign: TextAlign.center,
-      ),
-      actions: [
-        Center(
-          child: TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: success ? Colors.green : Colors.red,
+        actions: [
+          Center(
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: success ? Colors.green : Colors.red,
+              ),
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("OK"),
             ),
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text("OK"),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +317,15 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SsMaintenance(), // Replace with your target screen
+              ),
+            );
+          },
         ),
         backgroundColor: const Color.fromARGB(255, 16, 156, 188),
         title: Column(
@@ -575,7 +597,7 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                                 border: OutlineInputBorder(),
                                 isDense: true, // makes height compact
                               ),
-                              items: ["320000098","3000000215","310000111"]
+                              items: ["320000098", "3000000215", "310000111"]
                                   .map(
                                     (status) => DropdownMenuItem(
                                       value: status,
@@ -1921,8 +1943,9 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {    validateForm(context);
-},
+                  onPressed: () {
+                    validateForm(context);
+                  },
                   child: const Text("Submit"),
                 ),
               ),
