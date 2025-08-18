@@ -49,6 +49,13 @@ class _PInspectionState extends State<PInspection> {
 
   List<String> selectSS = ["0004-33KV SS-REC"];
 
+ final Map<String, List<String>> optionValues = {
+  "320000098": ["8.0MVA", "ACCURATE", "APNPDCL-07", "2010"],
+  "3000000215": ["8.0MVA", "VE", "119699", "1991"],
+  "310000111": ["8.0MVA", "KK RAO", "PT-4955", "null"],
+};
+  List<String> displayedValues = ["-", "-", "-", "-"];
+
   List<String> selectDivision = [
     "SELECT",
     "HANAMKONDA TOWN",
@@ -577,167 +584,68 @@ class _PInspectionState extends State<PInspection> {
 
                       Divider(color: Colors.grey.shade300, thickness: 1),
 
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       flex: 1,
-                      //       child: const Text(
-                      //         "SAP EQUIPMENT CODE ",
-                      //         style: TextStyle(fontSize: 8),
-                      //       ),
-                      //     ),
-                      //     const SizedBox(
-                      //       width: 8,
-                      //     ), // spacing between text and dropdown
-                      //     Expanded(
-                      //       flex: 2,
-                      //       child: DropdownButtonFormField2<String>(
-                      //         value: selectedSapEquipCode,
-                      //         decoration: const InputDecoration(
-                      //           border: OutlineInputBorder(),
-                      //           isDense: true, // makes height compact
-                      //         ),
-                      //         items: ["320000098", "3000000215", "310000111"]
-                      //             .map(
-                      //               (status) => DropdownMenuItem(
-                      //                 value: status,
-                      //                 child: Text(status),
-                      //               ),
-                      //             )
-                      //             .toList(),
-                      //         onChanged: (value) {
-                      //           setState(() {
-                      //             selectedSapEquipCode = value;
-                      //           });
-                      //         },
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       Row(
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-    Expanded(
-      flex: 1,
-      child: const Text(
-        "SAP EQUIPMENT CODE",
-        style: TextStyle(
-          fontSize: 12, // slightly bigger than 8 for readability
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    ),
-    const SizedBox(width: 10), // spacing between label and dropdown
-    Expanded(
-      flex: 2,
-      child: DropdownButtonFormField2<String>(
-        value: selectedSapEquipCode,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          isDense: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-        ),
-        items: ["320000098", "3000000215", "310000111"]
-            .map(
-              (code) => DropdownMenuItem(
-                value: code,
-                child: Text(code),
-              ),
-            )
-            .toList(),
-        onChanged: (value) {
-          setState(() {
-            selectedSapEquipCode = value;
-          });
-        },
-      ),
-    ),
-  ],
-),
-
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: const Text(
+                              "SAP EQUIPMENT CODE",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 2,
+                            child: DropdownButtonFormField2<String>(
+                              value: selectedSapEquipCode,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 12,
+                                ),
+                              ),
+                              items: ["320000098", "3000000215", "310000111"]
+                                  .map(
+                                    (code) => DropdownMenuItem(
+                                      value: code,
+                                      child: Text(code),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedSapEquipCode = value;
+                                  displayedValues =
+                                      optionValues[value] ??
+                                      ["-", "-", "-", "-"];
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
 
                       Divider(color: Colors.grey.shade300, thickness: 1),
 
+                    
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16.0,
-                        ), // top & bottom padding
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "PTR CAPACITY",
                               style: TextStyle(fontSize: 14),
                             ),
-                            Spacer(),
-                            const Text(
-                              "8.0MVA",
-                              style: TextStyle(
-                                fontSize: 12, // reduced font size
-                                color: Color(0xFF8B8B83), // cement color
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Divider(color: Colors.grey.shade300, thickness: 1),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16.0,
-                        ), // top & bottom padding
-                        child: Row(
-                          children: const [
-                            Text("PTR MAKE", style: TextStyle(fontSize: 14)),
-                            Spacer(),
-                            const Text(
-                              "8.0MVA",
-                              style: TextStyle(
-                                fontSize: 12, // reduced font size
-                                color: Color(0xFF8B8B83), // cement color
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Divider(color: Colors.grey.shade300, thickness: 1),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16.0,
-                        ), // top & bottom padding
-                        child: Row(
-                          children: const [
-                            Text("PTR SLNO", style: TextStyle(fontSize: 14)),
-                            Spacer(),
-                            const Text(
-                              "8.0MVA",
-                              style: TextStyle(
-                                fontSize: 12, // reduced font size
-                                color: Color(0xFF8B8B83), // cement color
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Divider(color: Colors.grey.shade300, thickness: 1),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16.0,
-                        ), // top & bottom padding
-                        child: Row(
-                          children: const [
+                            const Spacer(),
                             Text(
-                              "PTR YEAR OF MFG",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            Spacer(),
-                            const Text(
-                              "8.0MVA",
-                              style: TextStyle(
+                              displayedValues[0],
+                              style: const TextStyle(
                                 fontSize: 12,
                                 color: Color(0xFF8B8B83),
                               ),
@@ -745,6 +653,70 @@ class _PInspectionState extends State<PInspection> {
                           ],
                         ),
                       ),
+                      Divider(color: Colors.grey.shade300, thickness: 1),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "PTR MAKE",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            const Spacer(),
+                            Text(
+                             displayedValues[1],
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF8B8B83),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(color: Colors.grey.shade300, thickness: 1),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "PTR SLNO",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            const Spacer(),
+                            Text(
+                              displayedValues[2],
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF8B8B83),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(color: Colors.grey.shade300, thickness: 1),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "PTR YEAR OF MFG",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            const Spacer(),
+                            Text(
+                              displayedValues[3],
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF8B8B83),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //
                       Divider(color: Colors.grey.shade300, thickness: 1),
 
                       Padding(
