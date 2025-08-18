@@ -4,14 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:tre_login_periodical_module/Tre%20login%20-%20periodical%20module/ss_maintenance.dart';
 
 class PInspection extends StatefulWidget {
-  const PInspection({super.key}); // optional: add const constructor
+  const PInspection({super.key});
 
   @override
   State<PInspection> createState() => _PInspectionState();
 }
 
 class _PInspectionState extends State<PInspection> {
-  // Example state variable
   String? selectedDivision;
   String? selectedSubDivision;
   String? selectedSection;
@@ -195,7 +194,7 @@ class _PInspectionState extends State<PInspection> {
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      lastDate: DateTime.now(),
     );
 
     if (picked != null) {
@@ -208,16 +207,15 @@ class _PInspectionState extends State<PInspection> {
   void _showSnackBar(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        behavior: SnackBarBehavior.floating, // ✅ floating style
-        backgroundColor: Colors.transparent, // ✅ make background clear
+        behavior: SnackBarBehavior.floating,  
+        backgroundColor: Colors.transparent, 
         elevation: 0,
         duration: const Duration(seconds: 2),
         content: Center(
-          // ✅ center the snackbar
-          child: Container(
+           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white, // ✅ white background
+              color: Colors.white, 
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
@@ -233,7 +231,7 @@ class _PInspectionState extends State<PInspection> {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 14,
-                color: Colors.black, // ✅ black text
+                color: Colors.black,  
               ),
             ),
           ),
@@ -344,58 +342,57 @@ class _PInspectionState extends State<PInspection> {
       _showSuccessDialog(context);
     }
   }
-void _showSuccessDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (ctx) => AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0), // rectangle shape
-      ),
-      backgroundColor: Colors.white,
-      titlePadding: EdgeInsets.zero, // remove default padding
-      title: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(12),
-        color: Colors.green, // ✅ Success color
-        child: const Text(
-          "Success",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+
+  void _showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0), 
+        ),
+        backgroundColor: Colors.white,
+        titlePadding: EdgeInsets.zero,  
+        title: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          color: Colors.green,  
+          child: const Text(
+            "Success",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
           ),
+        ),
+        content: const Text(
+          "All fields are filled successfully ",
+          style: TextStyle(color: Colors.green, fontSize: 16),
           textAlign: TextAlign.center,
         ),
-      ),
-      content: const Text(
-        "All fields are filled successfully ✅",
-        style: TextStyle(
-          color: Colors.green,
-          fontSize: 16,
-        ),
-        textAlign: TextAlign.center,
-      ),
-      actionsPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-      actions: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green, // ✅ button color
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
+        actionsPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+        actions: [
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, 
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
               ),
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("OK"),
             ),
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text("OK"),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -640,6 +637,8 @@ void _showSuccessDialog(BuildContext context) {
                                 labelStyle: TextStyle(color: Colors.red),
                                 border: OutlineInputBorder(),
                               ),
+                                                      hint: const Text("SELECT"),
+
                               items: selectSS
                                   .map(
                                     (status) => DropdownMenuItem(
@@ -688,6 +687,8 @@ void _showSuccessDialog(BuildContext context) {
                                   vertical: 12,
                                 ),
                               ),
+                                                      hint: const Text("SELECT"),
+
                               items: ["320000098", "3000000215", "310000111"]
                                   .map(
                                     (code) => DropdownMenuItem(
@@ -1013,7 +1014,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none, // removes border
                         ),
-                        // hint: const Text("SELECT"),
+                         hint: const Text("SELECT"),
                         items: selectOtiStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1034,7 +1035,7 @@ void _showSuccessDialog(BuildContext context) {
                         TextField(
                           controller: _oticontroller,
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1086,7 +1087,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none, // removes border
                         ),
-                        // hint: const Text("SELECT"),
+                         hint: const Text("SELECT"),
                         items: selectWtiStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1107,7 +1108,7 @@ void _showSuccessDialog(BuildContext context) {
                         TextField(
                           controller: _wticontroller,
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1159,7 +1160,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none, // removes border
                         ),
-                        // hint: const Text("SELECT"),
+                         hint: const Text("SELECT"),
                         items: selectMogStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1181,7 +1182,7 @@ void _showSuccessDialog(BuildContext context) {
                           controller: _mogcontroller,
 
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1233,7 +1234,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none, // removes border
                         ),
-                        // hint: const Text("SELECT"),
+                         hint: const Text("SELECT"),
                         items: selectBuchholzStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1254,7 +1255,7 @@ void _showSuccessDialog(BuildContext context) {
                         TextField(
                           controller: _buchholzcontroller,
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1306,7 +1307,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none, // removes border
                         ),
-                        // hint: const Text("SELECT"),
+                         hint: const Text("SELECT"),
                         items: selectVentStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1327,7 +1328,7 @@ void _showSuccessDialog(BuildContext context) {
                         TextField(
                           controller: _ventcontroller,
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1368,7 +1369,6 @@ void _showSuccessDialog(BuildContext context) {
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
                         value: selectedPressure,
@@ -1377,9 +1377,11 @@ void _showSuccessDialog(BuildContext context) {
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
+ 
                         ),
-                        // hint: const Text("SELECT"),
+                                                hint: const Text("SELECT"),
+
                         items: selectPressureStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1400,7 +1402,7 @@ void _showSuccessDialog(BuildContext context) {
                         TextField(
                           controller: _pressurecontroller,
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1451,7 +1453,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none,
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectBimetallicStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1501,7 +1503,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none,
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectBushStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1522,12 +1524,10 @@ void _showSuccessDialog(BuildContext context) {
                         TextField(
                           controller: _bushrodcontroller,
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                              ), // normal state
+                              borderSide: BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1573,7 +1573,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none,
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectOltcStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1594,12 +1594,10 @@ void _showSuccessDialog(BuildContext context) {
                         TextField(
                           controller: _oltcmechcontroller,
                           decoration: const InputDecoration(
-                            labelText: "Enter details",
+                            labelText: "Enter remarks....",
                             border: UnderlineInputBorder(),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                              ), // normal state
+                              borderSide: BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -1706,7 +1704,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none,
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectFlexible
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1757,7 +1755,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none, // removes border
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectEarthing
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1808,7 +1806,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none, // removes border
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectEarthMatStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1918,7 +1916,7 @@ void _showSuccessDialog(BuildContext context) {
                           ),
                           border: InputBorder.none,
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectHorngapFuseStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -1958,7 +1956,6 @@ void _showSuccessDialog(BuildContext context) {
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
                         value: selectedOilLeakage,
@@ -1967,9 +1964,9 @@ void _showSuccessDialog(BuildContext context) {
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectOilLeakageStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -2009,7 +2006,6 @@ void _showSuccessDialog(BuildContext context) {
                       ),
                       const SizedBox(height: 8),
 
-                      // Clean Dropdown (No border)
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
                         value: selectedCleaning,
@@ -2018,9 +2014,9 @@ void _showSuccessDialog(BuildContext context) {
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          border: InputBorder.none, // removes border
+                          border: InputBorder.none,
                         ),
-                        // hint: const Text("SELECT"),
+                        hint: const Text("SELECT"),
                         items: selectCleaningStatus
                             .map(
                               (e) => DropdownMenuItem<String>(
@@ -2083,9 +2079,7 @@ void _showSuccessDialog(BuildContext context) {
                                   isDense: true,
                                   contentPadding: EdgeInsets.only(bottom: 4),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey,
-                                    ), // bottom border
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),

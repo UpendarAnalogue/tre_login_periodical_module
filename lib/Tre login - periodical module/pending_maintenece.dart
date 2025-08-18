@@ -11,63 +11,55 @@ class PendingMaintenece extends StatefulWidget {
 class _PendingMainteneceState extends State<PendingMaintenece> {
 
 
-//   void _showCustomDialog(BuildContext context, String msg, bool success) {
-//   showDialog(
-//     context: context,
-//     builder: (ctx) => AlertDialog(
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(0), // rectangle shape
-//       ),
-//       backgroundColor: Colors.white,
-//       titlePadding: EdgeInsets.zero, // remove default padding
-//       title: Container(
-//         width: double.infinity,
-//         padding: const EdgeInsets.all(12),
-//         color: success ? Colors.green : Colors.red, // ✅ dynamic color
-//         child: Text(
-//           success ? "Success" : "Failure", // ✅ dynamic title text
-//           style: const TextStyle(
-//             color: Colors.white,
-//             fontWeight: FontWeight.bold,
-//             fontSize: 18,
-//           ),
-//           textAlign: TextAlign.center,
-//         ),
-//       ),
-//       content: Text(
-//         msg,
-//         style: TextStyle(
-//           color: success ? Colors.green[900] : Colors.red[900],
-//           fontSize: 16,
-//         ),
-//         textAlign: TextAlign.center,
-//       ),
-//       actionsPadding: const EdgeInsets.only(
-//         left: 12,
-//         right: 12,
-//         bottom: 12,
-//       ),
-//       actions: [
-//         SizedBox(
-//           width: double.infinity,
-//           child: ElevatedButton(
-//             style: ElevatedButton.styleFrom(
-//               backgroundColor: success ? Colors.green : Colors.red, // ✅ dynamic button color
-//               foregroundColor: Colors.white,
-//               padding: const EdgeInsets.symmetric(vertical: 12),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(4),
-//               ),
-//             ),
-//             onPressed: () => Navigator.of(ctx).pop(),
-//             child: const Text("OK"),
-//           ),
-//         ),
-//       ],
-//     ),
-//   );
-// }
-
+void _showDataNotFoundDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0), 
+        ),
+        backgroundColor: Colors.white,
+        titlePadding: EdgeInsets.zero,  
+        title: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          color: Colors.green,  
+          child: const Text(
+            "Success",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        content: const Text(
+          "All fields are filled successfully ",
+          style: TextStyle(color: Color.fromARGB(255, 123, 26, 26), fontSize: 16),
+          textAlign: TextAlign.center,
+        ),
+        actionsPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+        actions: [
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, 
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("OK"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   
   
 
@@ -82,7 +74,7 @@ class _PendingMainteneceState extends State<PendingMaintenece> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    SsMaintenance(), // Replace with your target screen
+                    SsMaintenance(),  
               ),
             );
           },
