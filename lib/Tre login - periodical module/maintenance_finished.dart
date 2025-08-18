@@ -15,13 +15,22 @@ class _MaintenanceFinishedState extends State<MaintenanceFinished> {
     {"id": "#TRE25072410266", "name": "0004-33KV SS-REC", "date": "17-08-2025"},
     {"id": "#TRE25072410267", "name": "0005-11KV SS-ABC", "date": "18-08-2025"},
     {"id": "#TRE25072410268", "name": "0006-33KV SS-XYZ", "date": "19-08-2025"},
-      {"id": "#TRE25072410266", "name": "0004-33KV SS-REC", "date": "17-08-2025"},
-    {"id": "#TRE25072410267", "name": "0005-11KV SS-ABC", "date": "18-08-2025"},
-    {"id": "#TRE25072410268", "name": "0006-33KV SS-XYZ", "date": "19-08-2025"},
+    {"id": "#TRE25072410269", "name": "0007-11KV SS-DEF", "date": "20-08-2025"},
+    {"id": "#TRE25072410270", "name": "0008-33KV SS-GHI", "date": "21-08-2025"},
   ];
+
+  String searchQuery = "";
 
   @override
   Widget build(BuildContext context) {
+    // 🔍 Filtered list based on search
+    final filteredList = finishedList
+        .where(
+          (item) =>
+              item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()),
+        )
+        .toList();
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -43,7 +52,7 @@ class _MaintenanceFinishedState extends State<MaintenanceFinished> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 🔍 Search Row
               Row(
@@ -58,6 +67,11 @@ class _MaintenanceFinishedState extends State<MaintenanceFinished> {
                   ),
                   Expanded(
                     child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value;
+                        });
+                      },
                       decoration: const InputDecoration(
                         hintText: "Find SS....",
                         hintStyle: TextStyle(fontSize: 12),
@@ -73,59 +87,70 @@ class _MaintenanceFinishedState extends State<MaintenanceFinished> {
 
               const SizedBox(height: 20),
 
-              // 🔹 Finished list with dividers
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,  
-                children: List.generate(finishedList.length * 2 - 1, (index) {
-                  if (index.isOdd) {
-                    return const Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                      height: 20,
-                    );
-                  }
-
-                  final itemIndex = index ~/ 2;
-                  final item = finishedList[itemIndex];
-
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MfSelectedCard(data: item),
-                        ),
+              // 🔹 Finished list with dividers (filtered)
+              if (filteredList.isEmpty)
+                const Center(
+                  child: Text(
+                    "No results found",
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                  ),
+                )
+              else
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(filteredList.length * 2 - 1, (index) {
+                    if (index.isOdd) {
+                      return const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                        height: 20,
                       );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,  
-                        children: [
-                          Text(item["id"]!, style: const TextStyle(fontSize: 12)),
-                          const SizedBox(height: 4),
-                          Text(
-                            item["name"]!,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                            ),
+                    }
+
+                    final itemIndex = index ~/ 2;
+                    final item = filteredList[itemIndex];
+
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MfSelectedCard(data: item),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "Date: ${item["date"]}",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.green,
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item["id"]!,
+                              style: const TextStyle(fontSize: 12),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 4),
+                            Text(
+                              item["name"]!,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              "Date: ${item["date"]}",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }),
-              ),
+                    );
+                  }),
+                ),
             ],
           ),
         ),
@@ -133,3 +158,4 @@ class _MaintenanceFinishedState extends State<MaintenanceFinished> {
     );
   }
 }
+

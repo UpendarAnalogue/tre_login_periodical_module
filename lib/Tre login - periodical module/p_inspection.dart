@@ -49,11 +49,11 @@ class _PInspectionState extends State<PInspection> {
 
   List<String> selectSS = ["0004-33KV SS-REC"];
 
- final Map<String, List<String>> optionValues = {
-  "320000098": ["8.0MVA", "ACCURATE", "APNPDCL-07", "2010"],
-  "3000000215": ["8.0MVA", "VE", "119699", "1991"],
-  "310000111": ["8.0MVA", "KK RAO", "PT-4955", "null"],
-};
+  final Map<String, List<String>> optionValues = {
+    "320000098": ["8.0MVA", "ACCURATE", "APNPDCL-07", "2010"],
+    "3000000215": ["8.0MVA", "VE", "119699", "1991"],
+    "310000111": ["8.0MVA", "KK RAO", "PT-4955", "null"],
+  };
   List<String> displayedValues = ["-", "-", "-", "-"];
 
   List<String> selectDivision = [
@@ -274,49 +274,62 @@ class _PInspectionState extends State<PInspection> {
     return true;
   }
 
-  // Custom Dialog
-  void _showCustomDialog(BuildContext context, String msg, bool success) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0), // rectangle shape
-        ),
-        backgroundColor: Colors.white, // base white background
-        title: Container(
-          padding: const EdgeInsets.all(8),
-          color: success ? Colors.green : Colors.red,
-          child: Text(
-            success ? "Success" : "Error",
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        content: Text(
-          msg,
-          style: TextStyle(
-            color: success ? Colors.green[900] : Colors.red[900],
-            fontSize: 16,
+void _showCustomDialog(BuildContext context, String msg, bool success) {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0), // rectangle shape
+      ),
+      backgroundColor: Colors.white,
+      titlePadding: EdgeInsets.zero, // remove default padding
+      title: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(12),
+        color: success ? Colors.green : Colors.red, // ✅ dynamic color
+        child: Text(
+          success ? "Success" : "Failure", // ✅ dynamic title text
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
           ),
           textAlign: TextAlign.center,
         ),
-        actions: [
-          Center(
-            child: TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: success ? Colors.green : Colors.red,
-              ),
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text("OK"),
-            ),
-          ),
-        ],
       ),
-    );
-  }
+      content: Text(
+        msg,
+        style: TextStyle(
+          color: success ? Colors.green[900] : Colors.red[900],
+          fontSize: 16,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      actionsPadding: const EdgeInsets.only(
+        left: 12,
+        right: 12,
+        bottom: 12,
+      ),
+      actions: [
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: success ? Colors.green : Colors.red, // ✅ dynamic button color
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text("OK"),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -633,7 +646,6 @@ class _PInspectionState extends State<PInspection> {
 
                       Divider(color: Colors.grey.shade300, thickness: 1),
 
-                    
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
@@ -665,7 +677,7 @@ class _PInspectionState extends State<PInspection> {
                             ),
                             const Spacer(),
                             Text(
-                             displayedValues[1],
+                              displayedValues[1],
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Color(0xFF8B8B83),
