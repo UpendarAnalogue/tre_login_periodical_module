@@ -45,6 +45,15 @@ class _PInspectionState extends State<PInspection> {
   final TextEditingController _oilbdvvaluebottom = TextEditingController();
   final TextEditingController _oilbdvvaluetop = TextEditingController();
   final TextEditingController _oilbdvvalueloltc = TextEditingController();
+  final TextEditingController _oticontroller = TextEditingController();
+  final TextEditingController _wticontroller = TextEditingController();
+  final TextEditingController _mogcontroller = TextEditingController();
+  final TextEditingController _buchholzcontroller = TextEditingController();
+  final TextEditingController _ventcontroller = TextEditingController();
+  final TextEditingController _pressurecontroller = TextEditingController();
+  final TextEditingController _bushrodcontroller = TextEditingController();
+  final TextEditingController _oltcmechcontroller = TextEditingController();
+  // final TextEditingController _ = TextEditingController();
   // final TextEditingController _ = TextEditingController();
 
   List<String> selectSS = ["0004-33KV SS-REC"];
@@ -246,86 +255,147 @@ class _PInspectionState extends State<PInspection> {
       _showSnackBar(context, "Please Select SS");
     } else if (selectedSapEquipCode == null) {
       _showSnackBar(context, "Please Select SAP EQUIPMENT CODE");
+    } else if (_nooftaps.text.isEmpty) {
+      _showSnackBar(context, "Please Enter NO OF TAPS");
+    } else if (_irhvbody.text.isEmpty) {
+      _showSnackBar(context, "Please Enter IR HV_BODY (MΩ)");
+    } else if (_irlvbody.text.isEmpty) {
+      _showSnackBar(context, "Please Enter IR LV-BODY(MΩ)");
+    } else if (_irhvlv.text.isEmpty) {
+      _showSnackBar(context, "Please Enter IR HV-LV(MΩ)");
     } else if (selectedOti == null) {
       _showSnackBar(context, "Please select OTI STATUS");
+    } else if ((selectedOti == "TOBE ATTENDED" ||
+            selectedOti == "UN SERVICEABLE") &&
+        _oticontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedOti");
     } else if (selectedWti == null) {
       _showSnackBar(context, "Please Select WTI STATUS");
+    } else if ((selectedWti == "TOBE ATTENDED" ||
+            selectedWti == "UN SERVICEABLE") &&
+        _wticontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedWti");
     } else if (selectedMog == null) {
       _showSnackBar(context, "Please Select MOG STATUS");
+    } else if ((selectedMog == "TOBE ATTENDED" ||
+            selectedMog == "UN SERVICEABLE") &&
+        _mogcontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedMog");
     } else if (selectedBuchholz == null) {
       _showSnackBar(
         context,
         "Please SELECT Buhholz & Surge relay trip circuit connections",
       );
+    } else if ((selectedBuchholz == "TOBE ATTENDED" ||
+            selectedBuchholz == "UN SERVICEABLE") &&
+        _buchholzcontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedBuchholz");
     } else if (selectedVent == null) {
       _showSnackBar(context, "Please SELECT VENT PIPE DIAPHRAGM STATUS");
+    } else if ((selectedVent == "TOBE ATTENDED" ||
+            selectedVent == "UN SERVICEABLE") &&
+        _ventcontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedVent");
     } else if (selectedPressure == null) {
       _showSnackBar(context, 'Please SELECT Pressure relief value status');
+    } else if ((selectedPressure == "TOBE ATTENDED" ||
+            selectedPressure == "UN SERVICEABLE") &&
+        _pressurecontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedPressure");
     } else if (selectedBimetalic == null) {
       _showSnackBar(context, "Please Select Bimetallic Clamps Status");
-    } 
-    
-    //todo   
+    } else if (selectedBush == null) {
+      _showSnackBar(context, "Please Select Bush Rods Status");
+    } else if ((selectedBush == "TOBE ATTENDED" ||
+            selectedBush == "UN SERVICEABLE") &&
+        _bushrodcontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedBush");
+    } else if (selectedOltc == null) {
+      _showSnackBar(context, "Please Select OLTC Mechanism Status");
+    } else if ((selectedOltc == "TOBE ATTENDED" ||
+            selectedOltc == "UN SERVICEABLE") &&
+        _oltcmechcontroller.text.isEmpty) {
+      _showSnackBar(context, "Please Enter for $selectedOltc");
+    } else if (_earthresistance.text.trim().isEmpty) {
+      _showSnackBar(context, "Please Enter Earth Resistance (Ω)");
+    } else if (selectedFlexible == null) {
+      _showSnackBar(context, "Please Select Flexible Jumpers");
+    } else if (selectedEarthing == null) {
+      _showSnackBar(context, "Please Slect Earthing Status");
+    } else if (selectedEarthMatStatus == null) {
+      _showSnackBar(context, "Please Select Earth Mat Status");
+    } else if (_ptrbody.text.trim().isEmpty) {
+      _showSnackBar(context, "Please Enter PTR Body current (Amps)");
+    } else if (selectedHorngap == null) {
+      _showSnackBar(context, "Please Select Horn Gap Fuse Status");
+    } else if (selectedOilLeakage == null) {
+      _showSnackBar(context, "Please Select Oil Leakage arrested status");
+    } else if (selectedCleaning == null) {
+      _showSnackBar(context, "Please Select Cleaning of bushes Status");
+    } else if (_oilbdvvaluebottom.text.trim().isEmpty) {
+      _showSnackBar(context, "Please Enter Oil BDV value PTR Bottom(KV)");
+    } else if (_oilbdvvaluetop.text.trim().isEmpty) {
+      _showSnackBar(context, "Please Enter Oil BDV value PTR TOP (KV)");
+    } else if (_oilbdvvalueloltc.text.trim().isEmpty) {
+      _showSnackBar(context, "Please Enter Oil BDV Value OLTEC(KV)");
+    }
+    //todo
     else {
-      _showSnackBar(context, "all fields are saved successfully");
+      _showSuccessDialog(context);
     }
   }
-
-  // void _showCustomDialog(BuildContext context, String msg, bool success) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (ctx) => AlertDialog(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(0), // rectangle shape
-  //       ),
-  //       backgroundColor: Colors.white,
-  //       titlePadding: EdgeInsets.zero, // remove default padding
-  //       title: Container(
-  //         width: double.infinity,
-  //         padding: const EdgeInsets.all(12),
-  //         color: success ? Colors.green : Colors.red, // ✅ dynamic color
-  //         child: Text(
-  //           success ? "Success" : "Failure", // ✅ dynamic title text
-  //           style: const TextStyle(
-  //             color: Colors.white,
-  //             fontWeight: FontWeight.bold,
-  //             fontSize: 18,
-  //           ),
-  //           textAlign: TextAlign.center,
-  //         ),
-  //       ),
-  //       content: Text(
-  //         msg,
-  //         style: TextStyle(
-  //           color: success ? Colors.green[900] : Colors.red[900],
-  //           fontSize: 16,
-  //         ),
-  //         textAlign: TextAlign.center,
-  //       ),
-  //       actionsPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-  //       actions: [
-  //         SizedBox(
-  //           width: double.infinity,
-  //           child: ElevatedButton(
-  //             style: ElevatedButton.styleFrom(
-  //               backgroundColor: success
-  //                   ? Colors.green
-  //                   : Colors.red, // ✅ dynamic button color
-  //               foregroundColor: Colors.white,
-  //               padding: const EdgeInsets.symmetric(vertical: 12),
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(4),
-  //               ),
-  //             ),
-  //             onPressed: () => Navigator.of(ctx).pop(),
-  //             child: const Text("OK"),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
+void _showSuccessDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0), // rectangle shape
+      ),
+      backgroundColor: Colors.white,
+      titlePadding: EdgeInsets.zero, // remove default padding
+      title: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(12),
+        color: Colors.green, // ✅ Success color
+        child: const Text(
+          "Success",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      content: const Text(
+        "All fields are filled successfully ✅",
+        style: TextStyle(
+          color: Colors.green,
+          fontSize: 16,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      actionsPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+      actions: [
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green, // ✅ button color
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text("OK"),
+          ),
+        ),
+      ],
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -962,6 +1032,7 @@ class _PInspectionState extends State<PInspection> {
                           selectedOti == "UN SERVICEABLE") ...[
                         const SizedBox(height: 12),
                         TextField(
+                          controller: _oticontroller,
                           decoration: const InputDecoration(
                             labelText: "Enter details",
                             border: UnderlineInputBorder(),
@@ -1030,6 +1101,28 @@ class _PInspectionState extends State<PInspection> {
                           });
                         },
                       ),
+                      if (selectedWti == "TOBE ATTENDED" ||
+                          selectedWti == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          controller: _wticontroller,
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1085,6 +1178,8 @@ class _PInspectionState extends State<PInspection> {
                           selectedMog == "UN SERVICEABLE") ...[
                         const SizedBox(height: 12),
                         TextField(
+                          controller: _mogcontroller,
+
                           decoration: const InputDecoration(
                             labelText: "Enter details",
                             border: UnderlineInputBorder(),
@@ -1157,6 +1252,7 @@ class _PInspectionState extends State<PInspection> {
                           selectBuchholzStatus == "UN SERVICEABLE") ...[
                         const SizedBox(height: 12),
                         TextField(
+                          controller: _buchholzcontroller,
                           decoration: const InputDecoration(
                             labelText: "Enter details",
                             border: UnderlineInputBorder(),
@@ -1229,6 +1325,7 @@ class _PInspectionState extends State<PInspection> {
                           selectedVent == "UN SERVICEABLE") ...[
                         const SizedBox(height: 12),
                         TextField(
+                          controller: _ventcontroller,
                           decoration: const InputDecoration(
                             labelText: "Enter details",
                             border: UnderlineInputBorder(),
@@ -1301,6 +1398,7 @@ class _PInspectionState extends State<PInspection> {
                           selectedPressure == "UN SERVICEABLE") ...[
                         const SizedBox(height: 12),
                         TextField(
+                          controller: _pressurecontroller,
                           decoration: const InputDecoration(
                             labelText: "Enter details",
                             border: UnderlineInputBorder(),
@@ -1422,6 +1520,7 @@ class _PInspectionState extends State<PInspection> {
                           selectedBush == "UN SERVICEABLE") ...[
                         const SizedBox(height: 12),
                         TextField(
+                          controller: _bushrodcontroller,
                           decoration: const InputDecoration(
                             labelText: "Enter details",
                             border: UnderlineInputBorder(),
@@ -1493,6 +1592,7 @@ class _PInspectionState extends State<PInspection> {
                           selectedOltc == "UN SERVICEABLE") ...[
                         const SizedBox(height: 12),
                         TextField(
+                          controller: _oltcmechcontroller,
                           decoration: const InputDecoration(
                             labelText: "Enter details",
                             border: UnderlineInputBorder(),
