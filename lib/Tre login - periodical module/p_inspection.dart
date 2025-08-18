@@ -196,140 +196,135 @@ class _PInspectionState extends State<PInspection> {
     }
   }
 
-  bool validateForm(BuildContext context) {
-    // Check Dropdowns
-    if (selectedDivision == null ||
-        selectedSubDivision == null ||
-        selectedSection == null ||
-        selectedDate == null ||
-        selectedSS == null ||
-        selectedSapEquipCode == null ||
-        selectedOti == null ||
-        selectedWti == null ||
-        selectedMog == null ||
-        selectedBuchholz == null ||
-        selectedVent == null ||
-        selectedPressure == null ||
-        selectedBimetalic == null ||
-        selectedBush == null ||
-        selectedOltc == null ||
-        selectedFlexible == null ||
-        selectedEarthing == null ||
-        selectedEarthMatStatus == null ||
-        selectedHorngap == null ||
-        selectedOilLeakage == null ||
-        selectedCleaning == null) {
-      _showCustomDialog(context, "Please fill all dropdown fields", false);
-      return false;
-    }
-
-    // // Check Text Fields
-    // if (_nooftaps.text.isEmpty ||
-    //     _irhvbody.text.isEmpty ||
-    //     _irlvbody.text.isEmpty ||
-    //     _irhvlv.text.isEmpty ||
-    //     _earthresistance.text.isEmpty ||
-    //     _ptrbody.text.isEmpty ||
-    //     _oilbdvvaluebottom.text.isEmpty ||
-    //     _oilbdvvaluetop.text.isEmpty ||
-    //     _oilbdvvalueloltc.text.isEmpty) {
-    //   _showCustomDialog(context, "Please fill all text fields", false);
-    //   return false;
-    // }
-    if (_nooftaps.text.isEmpty || _nooftaps.text.length < 2) {
-      _showCustomDialog(
-        context,
-        "No of Taps must be at least 2 characters",
-        false,
-      );
-      return false;
-    }
-
-    if (_irhvbody.text.isEmpty ||
-        _irhvbody.text.length < 8 ||
-        _irlvbody.text.isEmpty ||
-        _irlvbody.text.length < 8 ||
-        _irhvlv.text.isEmpty ||
-        _irhvlv.text.length < 8 ||
-        _earthresistance.text.isEmpty ||
-        _earthresistance.text.length < 8 ||
-        _ptrbody.text.isEmpty ||
-        _ptrbody.text.length < 8 ||
-        _oilbdvvaluebottom.text.isEmpty ||
-        _oilbdvvaluebottom.text.length < 8 ||
-        _oilbdvvaluetop.text.isEmpty ||
-        _oilbdvvaluetop.text.length < 8 ||
-        _oilbdvvalueloltc.text.isEmpty ||
-        _oilbdvvalueloltc.text.length < 8) {
-      _showCustomDialog(
-        context,
-        "All other fields must be at least 8 characters",
-        false,
-      );
-      return false;
-    }
-
-    // All fields filled
-    _showCustomDialog(context, "SS MAINTANENCE SAVED SUCCESSFULLY", true);
-    return true;
-  }
-
-void _showCustomDialog(BuildContext context, String msg, bool success) {
-  showDialog(
-    context: context,
-    builder: (ctx) => AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0), // rectangle shape
-      ),
-      backgroundColor: Colors.white,
-      titlePadding: EdgeInsets.zero, // remove default padding
-      title: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(12),
-        color: success ? Colors.green : Colors.red, // ✅ dynamic color
-        child: Text(
-          success ? "Success" : "Failure", // ✅ dynamic title text
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      content: Text(
-        msg,
-        style: TextStyle(
-          color: success ? Colors.green[900] : Colors.red[900],
-          fontSize: 16,
-        ),
-        textAlign: TextAlign.center,
-      ),
-      actionsPadding: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        bottom: 12,
-      ),
-      actions: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: success ? Colors.green : Colors.red, // ✅ dynamic button color
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
+  void _showSnackBar(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating, // ✅ floating style
+        backgroundColor: Colors.transparent, // ✅ make background clear
+        elevation: 0,
+        duration: const Duration(seconds: 2),
+        content: Center(
+          // ✅ center the snackbar
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white, // ✅ white background
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 6,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Text(
+              msg,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black, // ✅ black text
               ),
             ),
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text("OK"),
           ),
         ),
-      ],
-    ),
-  );
-}
+      ),
+    );
+  }
+
+  void _checkField(BuildContext context) {
+    if (selectedDivision == null) {
+      _showSnackBar(context, "Please Select your Division !");
+    } else if (selectedSubDivision == null || selectedSubDivision!.isEmpty) {
+      _showSnackBar(context, "Please Select your Sub Division !");
+    } else if (selectedSection == null || selectedSection!.isEmpty) {
+      _showSnackBar(context, "Please Select your Section !");
+    } else if (selectedDate == null) {
+      _showSnackBar(context, "Please Select Date of Inspection");
+    } else if (selectedSS == null || selectedSection!.isEmpty) {
+      _showSnackBar(context, "Please Select SS");
+    } else if (selectedSapEquipCode == null) {
+      _showSnackBar(context, "Please Select SAP EQUIPMENT CODE");
+    } else if (selectedOti == null) {
+      _showSnackBar(context, "Please select OTI STATUS");
+    } else if (selectedWti == null) {
+      _showSnackBar(context, "Please Select WTI STATUS");
+    } else if (selectedMog == null) {
+      _showSnackBar(context, "Please Select MOG STATUS");
+    } else if (selectedBuchholz == null) {
+      _showSnackBar(
+        context,
+        "Please SELECT Buhholz & Surge relay trip circuit connections",
+      );
+    } else if (selectedVent == null) {
+      _showSnackBar(context, "Please SELECT VENT PIPE DIAPHRAGM STATUS");
+    } else if (selectedPressure == null) {
+      _showSnackBar(context, 'Please SELECT Pressure relief value status');
+    } else if (selectedBimetalic == null) {
+      _showSnackBar(context, "Please Select Bimetallic Clamps Status");
+    } 
+    
+    //todo   
+    else {
+      _showSnackBar(context, "all fields are saved successfully");
+    }
+  }
+
+  // void _showCustomDialog(BuildContext context, String msg, bool success) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (ctx) => AlertDialog(
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(0), // rectangle shape
+  //       ),
+  //       backgroundColor: Colors.white,
+  //       titlePadding: EdgeInsets.zero, // remove default padding
+  //       title: Container(
+  //         width: double.infinity,
+  //         padding: const EdgeInsets.all(12),
+  //         color: success ? Colors.green : Colors.red, // ✅ dynamic color
+  //         child: Text(
+  //           success ? "Success" : "Failure", // ✅ dynamic title text
+  //           style: const TextStyle(
+  //             color: Colors.white,
+  //             fontWeight: FontWeight.bold,
+  //             fontSize: 18,
+  //           ),
+  //           textAlign: TextAlign.center,
+  //         ),
+  //       ),
+  //       content: Text(
+  //         msg,
+  //         style: TextStyle(
+  //           color: success ? Colors.green[900] : Colors.red[900],
+  //           fontSize: 16,
+  //         ),
+  //         textAlign: TextAlign.center,
+  //       ),
+  //       actionsPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+  //       actions: [
+  //         SizedBox(
+  //           width: double.infinity,
+  //           child: ElevatedButton(
+  //             style: ElevatedButton.styleFrom(
+  //               backgroundColor: success
+  //                   ? Colors.green
+  //                   : Colors.red, // ✅ dynamic button color
+  //               foregroundColor: Colors.white,
+  //               padding: const EdgeInsets.symmetric(vertical: 12),
+  //               shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(4),
+  //               ),
+  //             ),
+  //             onPressed: () => Navigator.of(ctx).pop(),
+  //             child: const Text("OK"),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -963,6 +958,27 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                           });
                         },
                       ),
+                      if (selectedOti == "TOBE ATTENDED" ||
+                          selectedOti == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1065,6 +1081,27 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                           });
                         },
                       ),
+                      if (selectedMog == "TOBE ATTENDED" ||
+                          selectedMog == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1116,6 +1153,27 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                           });
                         },
                       ),
+                      if (selectBuchholzStatus == "TOBE ATTENDED" ||
+                          selectBuchholzStatus == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1167,6 +1225,27 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                           });
                         },
                       ),
+                      if (selectedVent == "TOBE ATTENDED" ||
+                          selectedVent == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1218,6 +1297,27 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                           });
                         },
                       ),
+                      if (selectedPressure == "TOBE ATTENDED" ||
+                          selectedPressure == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1318,6 +1418,27 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                           });
                         },
                       ),
+                      if (selectedBush == "TOBE ATTENDED" ||
+                          selectedBush == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1368,6 +1489,27 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                           });
                         },
                       ),
+                      if (selectedOltc == "TOBE ATTENDED" ||
+                          selectedOltc == "UN SERVICEABLE") ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: "Enter details",
+                            border: UnderlineInputBorder(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ), // normal state
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -1969,7 +2111,7 @@ void _showCustomDialog(BuildContext context, String msg, bool success) {
                     ),
                   ),
                   onPressed: () {
-                    validateForm(context);
+                    _checkField(context);
                   },
                   child: const Text("Submit"),
                 ),
